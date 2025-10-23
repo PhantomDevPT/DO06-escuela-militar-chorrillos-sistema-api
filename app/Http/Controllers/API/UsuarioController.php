@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ActualizarUsuarioRequest;
+use App\Http\Requests\CambiarPasswordRequest;
 use App\Http\Requests\RegistrarUsuarioRequest;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
@@ -40,6 +41,29 @@ class UsuarioController extends Controller
         return response()->json([
             "success" => true,
             "message" => "Usuario actualizado",
+        ]);
+    }
+
+    /**
+     * Cambiar contraseña de usuario
+     */
+    public function cambiarPasswordUsuario(CambiarPasswordRequest $request)
+    {
+        $usuario = Usuario::where('Correo', $request->Correo)->first();
+
+        if (!$usuario) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Usuario no encontrado'
+            ], 404);
+        }
+
+        $usuario->Contrasena = Hash::make($request->Contrasena);
+        $usuario->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Contraseña actualizada correctamente.',
         ]);
     }
 }
