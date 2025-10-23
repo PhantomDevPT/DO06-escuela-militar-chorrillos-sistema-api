@@ -8,6 +8,7 @@ use App\Http\Requests\CambiarPasswordRequest;
 use App\Http\Requests\RegistrarUsuarioRequest;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UsuarioController extends Controller
 {
