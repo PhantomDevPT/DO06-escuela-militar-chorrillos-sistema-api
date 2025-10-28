@@ -7,7 +7,7 @@
 # $requests = @("Usuario", "Cliente", "Plataforma") #pasamos así si tenemos varias tablas que crear
 # $requests = @("Netflix", "Disney", "PrimeVideo", "Crunchyroll", "HBO", "Vix", "IPTV", "Spotify", "YouTubePremium", "Viki", "ChatGPT");
 
-$requests = @("Usuario") #poner nombre de una sola tabla
+$requests = @("Streampay","Tienda","Ferreteria","Leadsy","Gasys","Biosite","Tarea","Usuario","DesarrolloWeb") #poner nombre de una sola tabla
 
 # Loop a través de cada nombre y ejecutar los comandos php artisan make:request
 foreach ($name in $requests) {
