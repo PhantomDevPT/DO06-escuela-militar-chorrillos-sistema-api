@@ -26,13 +26,17 @@ class UsuarioController extends Controller
         ]);
     } //
 
-    public function listarTodosLosUsuarios()
+    public function listarUsuarios(Request $request)
     {
-        // Obtener todos los clientes, ordenados por 'created_at' de forma descendente
-        $usuarios = Usuario::all();
+        $perPage = $request->get('perPage', 5); // cantidad por página
+        $usuarios = Usuario::paginate($perPage);
 
-        return $usuarios;
+        return response()->json([
+            "success" => true,
+            "data" => $usuarios,
+        ]);
     }
+
 
     public function actualizarUsuario(ActualizarUsuarioRequest $request, Usuario $id_usuario)
     {
