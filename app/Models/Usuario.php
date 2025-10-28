@@ -2,15 +2,21 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Usuario extends Model
+class Usuario extends Authenticatable
 {
-    //
-    protected $table = "Usuarios";
-    
+    use HasApiTokens, HasFactory, Notifiable;
+
+
+    protected $table = "usuarios";
+
     protected $primaryKey = "id_usuario";
-    
+
     protected $fillable = [
         "id_usuario",
         "Nombres",
@@ -21,11 +27,6 @@ class Usuario extends Model
         "created_at",
         "updated_at",
     ];
-    
+
     protected $hidden = [];
-    
-    // public function TableName()
-    // {
-    //     return $this->belongsTo(TableName::class, 'id_relacionado', 'id_relacionado');
-    // }
 }

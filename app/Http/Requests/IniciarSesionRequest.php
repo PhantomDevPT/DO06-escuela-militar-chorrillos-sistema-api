@@ -11,7 +11,7 @@ class IniciarSesionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class IniciarSesionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "correo" => "required|email", //agregar el "email_confirmation" si tiene el confirmed
+            "contrasena" => "required" //
         ];
     }
 }

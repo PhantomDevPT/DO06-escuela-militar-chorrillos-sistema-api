@@ -8,32 +8,31 @@ use App\Http\Requests\CambiarPasswordRequest;
 use App\Http\Requests\RegistrarUsuarioRequest;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+
+//PARA CAMBIAR CONTRASENA
+// use Illuminate\Support\Facades\Hash;
+// use Illuminate\Support\Facades\Mail;
 
 class UsuarioController extends Controller
 {
-    //
     public function registrarUsuario(RegistrarUsuarioRequest $request)
     {
-        Usuario::create($request->all());
+        $encryptPassword = $request->encryptPassword();
+        Usuario::create($encryptPassword);
 
         return response()->json([
             "success" => true,
-            "message" => "Usuario registrado",
+            "message" => "Usuario registrado correctamente",
         ]);
-    }
+    } //
 
-    public function listarUsuarios(Request $request)
+    public function listarTodosLosUsuarios()
     {
-        $perPage = $request->get('perPage', 5); // cantidad por página
-        $usuarios = Usuario::paginate($perPage);
+        // Obtener todos los clientes, ordenados por 'created_at' de forma descendente
+        $usuarios = Usuario::all();
 
-        return response()->json([
-            "success" => true,
-            "data" => $usuarios,
-        ]);
+        return $usuarios;
     }
-
 
     public function actualizarUsuario(ActualizarUsuarioRequest $request, Usuario $id_usuario)
     {
@@ -45,26 +44,15 @@ class UsuarioController extends Controller
         ]);
     }
 
-    /**
-     * Cambiar contraseña de usuario
-     */
-    public function cambiarPasswordUsuario(CambiarPasswordRequest $request)
-    {
-        $usuario = Usuario::where('Correo', $request->Correo)->first();
+    // public function cambiarPasswordUsuario(CambiarPasswordRequest $request)
+    // {
+    //     $usuario = Usuario::where('correo', $request->correo)->first();
+    //     $usuario->contrasena = Hash::make($request->contrasena);
+    //     $usuario->save();
 
-        if (!$usuario) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Usuario no encontrado'
-            ], 404);
-        }
-
-        $usuario->Contrasena = Hash::make($request->Contrasena);
-        $usuario->save();
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Contraseña actualizada correctamente.',
-        ]);
-    }
+    //     return response()->json([
+    //         'success' => true,
+    //         'message' => 'Contraseña actualizada correctamente.',
+    //     ], 200);
+    // }
 }
